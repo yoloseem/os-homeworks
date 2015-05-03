@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
-#include <time.h>
+#include <unistd.h>
+#include <sys/time.h>
 #include <pthread.h>
 #include <semaphore.h>
 
@@ -46,13 +47,13 @@ void* dining (void* arg) {
     /* .......... To be implemented */
 }
 
-void main(void) {
+int main (void) {
     pthread_t t[NUM_PHIL];
     unsigned short i, args[NUM_PHIL], minCount = USHRT_MAX, maxCount =0;
     long start, end, minWait = LONG_MAX, maxWait = 0, waitAVG = 0, waitVar = 0;
     double countAVG = 0, countVar = 0;
 
-    srand(time((void*)0));
+    srand(time(NULL));
     start = tick();
     initPhil();
 
@@ -92,4 +93,6 @@ void main(void) {
     printf("Min count : %d\nMax count : %d\nAVG count : %.3f\nCount variance : %.3f\n\n", minCount, maxCount, countAVG, countVar);
     printf("Min wait time in HUNGRY state : %ld.%ld sec\nMax wait time in HUNGRY state : %ld.%ld sec\nAVG wait time in HUNGRY state : %ld.%ld sec\nVariance wait time in HUNGRY state : %ld.%ld sec\n\n", minWait / 1000, minWait % 1000, maxWait / 1000, maxWait % 1000, waitAVG / 1000,waitAVG % 1000, waitVar / 1000000, (waitVar % 1000000) / 1000);
     printf("Total run time : %ld.%ld sec\n\n", (end - start)/ 1000, (end - start)% 1000);
+
+    return 0;
 }
