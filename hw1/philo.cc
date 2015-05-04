@@ -6,6 +6,10 @@
 #include <pthread.h>
 #include <semaphore.h>
 
+#define DEBUG true
+#define debug_print(fmt, ...) \
+    do { if (DEBUG) fprintf(stderr, fmt, __VA_ARGS__); } while (0)
+
 #define HUNGRY 0
 #define EATING 1
 #define THINKING 2
