@@ -39,7 +39,12 @@ unsigned int tick () { //get current time (msec)
 }
 
 void initPhil (void) {
-    /* .......... To be implemented */
+    unsigned short i;
+    for (i=0; i<NUM_PHIL; i++) {
+        phil[i].numEat = 0;
+        phil[i].state = THINKING;
+        phil[i].wait = 0;
+    }
 }
 
 void* dining (void* arg) {
