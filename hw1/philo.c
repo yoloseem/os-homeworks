@@ -80,17 +80,11 @@ int main (void) {
         printf("Philosopher %d eating count : %d\nPhilosopher %d waiting time in HUNGRY state : %ld.%ld sec\n\n", i, phil[i].numEat, i, phil[i].wait / 1000, phil[i].wait % 1000);
         countAVG += phil[i].numEat;
 
-        if(minCount > phil[i].numEat)
-            minCount = phil[i].numEat;
-        if (maxCount < phil[i].numEat)
-            maxCount = phil[i].numEat;
-
+        minCount = MIN(minCount, phil[i].numEat);
+        maxCount = MAX(maxCount, phil[i].numEat);
         waitAVG += phil[i].wait;
-
-        if (minWait > phil[i].wait)
-            minWait = phil[i].wait;
-        if (maxWait < phil[i].wait)
-            maxWait = phil[i].wait;
+        minWait = MIN(minWait, phil[i].wait);
+        maxWait = MAX(maxWait, phil[i].wait);
     }
     countAVG /= NUM_PHIL;
     waitAVG /= NUM_PHIL;
