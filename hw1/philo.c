@@ -122,7 +122,7 @@ int main (void) {
 
     for (i=0; i<NUM_PHIL; i++) {
         printf("Philosopher %d eating count : %d\n", i, phil[i].numEat);
-        printf("Philosopher %d waiting time in HUNGRY state : %ld.%04ld sec",
+        printf("Philosopher %d waiting time in HUNGRY state : %ld.%03ld sec",
                i, phil[i].wait / 1000, phil[i].wait % 1000);
         printf("\n\n");
         countAVG += phil[i].numEat;
