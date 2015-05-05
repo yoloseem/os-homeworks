@@ -61,6 +61,8 @@ void* dining (void* arg) {
         debug_print("%d", arg);
         // TODO: Dining process
     }
+
+    return (void*)NULL;
 }
 
 int main (void) {
