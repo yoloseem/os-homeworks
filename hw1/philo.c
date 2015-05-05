@@ -108,15 +108,15 @@ int main (void) {
     printf("Max count : %d\n", maxCount);
     printf("AVG count : %.3f\n", countAVG);
     printf("Count variance : %.3f\n\n", countVar);
-    printf("Min wait time in HUNGRY state : %ld.%04ld sec\n",
+    printf("Min wait time in HUNGRY state : %ld.%03ld sec\n",
            minWait / 1000, minWait % 1000);
-    printf("Max wait time in HUNGRY state : %ld.%04ld sec\n",
+    printf("Max wait time in HUNGRY state : %ld.%03ld sec\n",
            maxWait / 1000, maxWait % 1000);
-    printf("AVG wait time in HUNGRY state : %ld.%04ld sec\n",
+    printf("AVG wait time in HUNGRY state : %ld.%03ld sec\n",
            waitAVG / 1000, waitAVG % 1000);
     printf("Variance wait time in HUNGRY state : %ld.%06ld sec\n\n",
            waitVar / 1000000, (waitVar % 1000000) / 1000);
-    printf("Total run time : %ld.%04ld sec\n\n",
+    printf("Total run time : %ld.%03ld sec\n\n",
           (end - start)/ 1000, (end - start)% 1000);
     return 0;
 }
