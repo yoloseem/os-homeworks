@@ -69,7 +69,7 @@ void* dining (void* arg) {
                 phil_i, left, right);
 
     start_time = tick();
-    while (tick() - start_time < EXEC_TIME) {
+    while ((tick() - start_time) / 1000 < EXEC_TIME) {
         debug_print("Philosopher #%d: %s\n",
                     phil_i, verboseStates[curphil->state]);
 
