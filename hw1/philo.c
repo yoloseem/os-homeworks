@@ -58,6 +58,8 @@ void* dining (void* arg) {
     unsigned int start_time;
     unsigned int start_hungry, end_hungry;
     unsigned short phil_i = (int)arg;
+    unsigned short leftfirst = phil_i % 2;
+    philosopher* curphil = &phil[phil_i];
 
     left = phil_i - 1;
     if (left < 0 | left >= NUM_PHIL) left = NUM_PHIL - 1;
@@ -68,7 +70,31 @@ void* dining (void* arg) {
 
     start_time = tick();
     while (tick() - start_time < EXEC_TIME) {
-        // TODO: Dining process
+        debug_print("Philosopher #%d: %s\n",
+                    phil_i, verboseStates[curphil->state]);
+
+        if (curphil->state == THINKING) {
+            idlewait();
+            curphil->state = HUNGRY;
+        }
+        else if (curphil->state == HUNGRY) {
+            if (leftfirst) {
+                sem_wait(&chopstick[left]);
+                sem_wait(&chopstick[right]);
+            }
+            else {
+                sem_wait(&chopstick[right]);
+                sem_wait(&chopstick[left]);
+            }
+            curphil->state = EATING;
+            curphil->numEat++;
+        }
+        else if (curphil->state == EATING) {
+            idlewait();
+            sem_post(&chopstick[left]);
+            sem_post(&chopstick[right]);
+            curphil->state = THINKING;
+        }
     }
 
     return (void*)NULL;
