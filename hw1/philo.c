@@ -26,6 +26,7 @@ typedef struct philosopher {
     long wait;
 } philosopher;
 philosopher phil[NUM_PHIL];
+char *verboseStates[] = {"HUNGRY", "EATING", "THINKING"};
 
 sem_t chopstick[NUM_PHIL];
 
