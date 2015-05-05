@@ -56,8 +56,11 @@ void* dining (void* arg) {
     unsigned int start_time;
     unsigned int start_hungry, end_hungry;
 
-    debug_print("%d\n", arg);
-    /* .......... To be implemented */
+    start_time = tick();
+    while (tick() - start_time < EXEC_TIME) {
+        debug_print("%d", arg);
+        // TODO: Dining process
+    }
 }
 
 int main (void) {
