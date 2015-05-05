@@ -140,8 +140,8 @@ int main (void) {
         countVar += (countAVG - phil[i].numEat) * (countAVG - phil[i].numEat);
         waitVar += (waitAVG - phil[i].wait) * (waitAVG - phil[i].wait);
     }
-    countVar /= NUM_PHIL;
-    waitVar /= NUM_PHIL;
+    countVar /= (NUM_PHIL - 1);
+    waitVar /= (NUM_PHIL - 1);
 
     printf("Min count : %d\n", minCount);
     printf("Max count : %d\n", maxCount);
