@@ -49,6 +49,7 @@ void initPhil (void) {
         phil[i].numEat = 0;
         phil[i].state = THINKING;
         phil[i].wait = 0;
+        sem_init(&chopstick[i], 0, 1);
     }
 }
 
@@ -120,6 +121,9 @@ int main (void) {
     }
 
     end = tick();
+
+    for (i=0; i<NUM_PHIL; i++)
+        sem_destroy(&chopstick[i]);
 
     for (i=0; i<NUM_PHIL; i++) {
         printf("Philosopher %d eating count : %d\n", i, phil[i].numEat);
