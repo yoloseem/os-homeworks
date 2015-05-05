@@ -77,7 +77,9 @@ int main (void) {
     end = tick();
 
     for (i=0; i<NUM_PHIL; i++) {
-        printf("Philosopher %d eating count : %d\nPhilosopher %d waiting time in HUNGRY state : %ld.%ld sec\n\n", i, phil[i].numEat, i, phil[i].wait / 1000, phil[i].wait % 1000);
+        printf("Philosopher %d eating count : %d\n", i, phil[i].numEat);
+        printf("Philosopher %d waiting time in HUNGRY state : %ld.%ld sec\n\n",
+               i, phil[i].wait / 1000, phil[i].wait % 1000);
         countAVG += phil[i].numEat;
 
         minCount = MIN(minCount, phil[i].numEat);
@@ -96,9 +98,19 @@ int main (void) {
     countVar /= NUM_PHIL;
     waitVar /= NUM_PHIL;
 
-    printf("Min count : %d\nMax count : %d\nAVG count : %.3f\nCount variance : %.3f\n\n", minCount, maxCount, countAVG, countVar);
-    printf("Min wait time in HUNGRY state : %ld.%ld sec\nMax wait time in HUNGRY state : %ld.%ld sec\nAVG wait time in HUNGRY state : %ld.%ld sec\nVariance wait time in HUNGRY state : %ld.%ld sec\n\n", minWait / 1000, minWait % 1000, maxWait / 1000, maxWait % 1000, waitAVG / 1000,waitAVG % 1000, waitVar / 1000000, (waitVar % 1000000) / 1000);
-    printf("Total run time : %ld.%ld sec\n\n", (end - start)/ 1000, (end - start)% 1000);
-
+    printf("Min count : %d\n", minCount);
+    printf("Max count : %d\n", maxCount);
+    printf("AVG count : %.3f\n", countAVG);
+    printf("Count variance : %.3f\n\n", countVar);
+    printf("Min wait time in HUNGRY state : %ld.%ld sec\n",
+           minWait / 1000, minWait % 1000);
+    printf("Max wait time in HUNGRY state : %ld.%ld sec\n",
+           maxWait / 1000, maxWait % 1000);
+    printf("AVG wait time in HUNGRY state : %ld.%ld sec\n",
+           waitAVG / 1000, waitAVG % 1000);
+    printf("Variance wait time in HUNGRY state : %ld.%ld sec\n\n",
+           waitVar / 1000000, (waitVar % 1000000) / 1000);
+    printf("Total run time : %ld.%ld sec\n\n",
+          (end - start)/ 1000, (end - start)% 1000);
     return 0;
 }
