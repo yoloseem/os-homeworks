@@ -55,10 +55,17 @@ void* dining (void* arg) {
     unsigned short left, right;
     unsigned int start_time;
     unsigned int start_hungry, end_hungry;
+    unsigned short phil_i = (int)arg;
+
+    left = phil_i - 1;
+    if (left < 0 | left >= NUM_PHIL) left = NUM_PHIL - 1;
+    right = (phil_i + 1) % NUM_PHIL;
+
+    debug_print("Philosopher #%d - Left chop: %d, Right chop: %d\n",
+                phil_i, left, right);
 
     start_time = tick();
     while (tick() - start_time < EXEC_TIME) {
-        debug_print("%d", arg);
         // TODO: Dining process
     }
 
