@@ -21,7 +21,8 @@
 #define EXEC_TIME 600
 
 typedef struct philosopher {
-    unsigned short numEat; int state;
+    unsigned short numEat;
+    int state;
     long wait;
 } philosopher;
 philosopher phil[NUM_PHIL];
