@@ -78,7 +78,7 @@ int main (void) {
 
     for (i=0; i<NUM_PHIL; i++) {
         args[i] = i;
-        pthread_create(&t[i], NULL, dining, args[i]);
+        pthread_create(&t[i], NULL, dining, (void*)args[i]);
     }
     for (i=0; i<NUM_PHIL; i++) {
         pthread_join(t[i], &t_return);
