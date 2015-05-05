@@ -6,4 +6,4 @@ clean:
 	${RM} philo
 
 philo:
-	${CXX} -o philo philo.cc
+	${CC} -o philo philo.c
