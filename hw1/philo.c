@@ -77,6 +77,7 @@ void* dining (void* arg) {
         if (curphil->state == THINKING) {
             idlewait();
             curphil->state = HUNGRY;
+            start_hungry = tick();
         }
         else if (curphil->state == HUNGRY) {
             if (leftfirst) {
@@ -87,7 +88,9 @@ void* dining (void* arg) {
                 sem_wait(&chopstick[right]);
                 sem_wait(&chopstick[left]);
             }
+            end_hungry = tick();
             curphil->state = EATING;
+            curphil->wait += (end_hungry - start_hungry);
             curphil->numEat++;
         }
         else if (curphil->state == EATING) {
