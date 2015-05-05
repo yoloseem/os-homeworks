@@ -56,6 +56,7 @@ void* dining (void* arg) {
     unsigned int start_time;
     unsigned int start_hungry, end_hungry;
 
+    debug_print("%d\n", arg);
     /* .......... To be implemented */
 }
 
@@ -64,15 +65,19 @@ int main (void) {
     unsigned short i, args[NUM_PHIL], minCount = USHRT_MAX, maxCount =0;
     long start, end, minWait = LONG_MAX, maxWait = 0, waitAVG = 0, waitVar = 0;
     double countAVG = 0, countVar = 0;
+    void *t_return = NULL;
 
     srand(time(NULL));
     start = tick();
     initPhil();
 
-    for (i=0; i<NUM_PHIL; i++)
+    for (i=0; i<NUM_PHIL; i++) {
         args[i] = i;
-
-    /* .......... To be implemented */
+        pthread_create(&t[i], NULL, dining, args[i]);
+    }
+    for (i=0; i<NUM_PHIL; i++) {
+        pthread_join(t[i], &t_return);
+    }
 
     end = tick();
 
