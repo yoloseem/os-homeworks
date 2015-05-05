@@ -10,6 +10,9 @@
 #define debug_print(fmt, ...) \
     do { if (DEBUG) fprintf(stderr, fmt, __VA_ARGS__); } while (0)
 
+#define MAX(a, b) (a)>(b)?(a):(b)
+#define MIN(a, b) (a)<(b)?(a):(b)
+
 #define HUNGRY 0
 #define EATING 1
 #define THINKING 2
