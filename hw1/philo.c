@@ -29,6 +29,7 @@ philosopher phil[NUM_PHIL];
 char *verboseStates[] = {"HUNGRY", "EATING", "THINKING"};
 
 sem_t chopstick[NUM_PHIL];
+sem_t lock;
 
 int idlewait ()  // 10~500 msec wait
 {
@@ -59,46 +60,36 @@ void* dining (void* arg) {
     unsigned int start_time;
     unsigned int start_hungry, end_hungry;
     unsigned short phil_i = (int)arg;
-    unsigned short leftfirst = phil_i % 2;
     philosopher* curphil = &phil[phil_i];
-
-    left = phil_i - 1;
-    if (left < 0 | left >= NUM_PHIL) left = NUM_PHIL - 1;
+    left = phil_i;
     right = (phil_i + 1) % NUM_PHIL;
-
-    debug_print("Philosopher #%d - Left chop: %d, Right chop: %d\n",
-                phil_i, left, right);
 
     start_time = tick();
     while ((tick() - start_time) / 1000 < EXEC_TIME) {
-        debug_print("Philosopher #%d: %s\n",
-                    phil_i, verboseStates[curphil->state]);
+        // initially/still THINKING
+        idlewait();
 
-        if (curphil->state == THINKING) {
-            idlewait();
-            curphil->state = HUNGRY;
-            start_hungry = tick();
-        }
-        else if (curphil->state == HUNGRY) {
-            if (leftfirst) {
-                sem_wait(&chopstick[left]);
-                sem_wait(&chopstick[right]);
-            }
-            else {
-                sem_wait(&chopstick[right]);
-                sem_wait(&chopstick[left]);
-            }
-            end_hungry = tick();
-            curphil->state = EATING;
-            curphil->wait += (end_hungry - start_hungry);
-            curphil->numEat++;
-        }
-        else if (curphil->state == EATING) {
-            idlewait();
-            sem_post(&chopstick[left]);
-            sem_post(&chopstick[right]);
-            curphil->state = THINKING;
-        }
+        // HUNGRY
+        curphil->state = HUNGRY;
+        start_hungry = tick();
+        // HUNGRY -- To eat, acquires chopsticks
+        sem_wait(&lock);
+        sem_wait(&chopstick[left]);
+        sem_wait(&chopstick[right]);
+        end_hungry = tick();
+
+        // EATING
+        curphil->state = EATING;
+        curphil->wait += (end_hungry - start_hungry);
+        curphil->numEat++;
+        idlewait();
+        // EATING -- To think(and not hungry), release chopsticks
+        sem_post(&chopstick[left]);
+        sem_post(&chopstick[right]);
+        sem_post(&lock);
+
+        // Stop EATING and go THINKING
+        curphil->state = THINKING;
     }
 
     return (void*)NULL;
@@ -114,6 +105,7 @@ int main (void) {
     srand(time(NULL));
     start = tick();
     initPhil();
+    sem_init(&lock, 0, NUM_PHIL - 1);
 
     for (i=0; i<NUM_PHIL; i++) {
         args[i] = i;
@@ -122,11 +114,11 @@ int main (void) {
     for (i=0; i<NUM_PHIL; i++) {
         pthread_join(t[i], &t_return);
     }
-
     end = tick();
 
     for (i=0; i<NUM_PHIL; i++)
         sem_destroy(&chopstick[i]);
+    sem_destroy(&lock);
 
     for (i=0; i<NUM_PHIL; i++) {
         printf("Philosopher %d eating count : %d\n", i, phil[i].numEat);
