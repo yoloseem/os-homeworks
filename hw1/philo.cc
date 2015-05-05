@@ -25,14 +25,14 @@ philosopher phil[NUM_PHIL];
 
 sem_t chopstick[NUM_PHIL];
 
-int idlewait () // 10~500 msec wait
+int idlewait ()  // 10~500 msec wait
 {
     int sleepTimeMS = (rand() % 491 + 10);
     usleep(sleepTimeMS * 1000);
     return sleepTimeMS;
 }
 
-unsigned int tick () { //get current time (msec)
+unsigned int tick () {  // get current time (msec)
     struct timeval tv;
     gettimeofday(&tv, (void*)0);
     return tv.tv_sec * (unsigned int)1000 + tv.tv_usec / 1000;
