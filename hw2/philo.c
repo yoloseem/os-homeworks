@@ -60,7 +60,7 @@ void* dining (void* arg) {
     unsigned short left, right;
     unsigned int start_time;
     unsigned int start_hungry, end_hungry;
-    unsigned short phil_i = (int)arg;
+    unsigned short phil_i = (int)(intptr_t)arg;
     philosopher* curphil = &phil[phil_i];
     left = phil_i;
     right = (phil_i + 1) % NUM_PHIL;
@@ -110,7 +110,7 @@ int main (void) {
 
     for (i=0; i<NUM_PHIL; i++) {
         args[i] = i;
-        pthread_create(&t[i], NULL, dining, (void*)args[i]);
+        pthread_create(&t[i], NULL, dining, (void*)(intptr_t)args[i]);
     }
     for (i=0; i<NUM_PHIL; i++) {
         pthread_join(t[i], &t_return);
