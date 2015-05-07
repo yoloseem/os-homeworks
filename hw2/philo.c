@@ -7,10 +7,6 @@
 #include <pthread.h>
 #include <semaphore.h>
 
-#define DEBUG 0
-#define debug_print(fmt, ...) \
-    do { if (DEBUG) fprintf(stderr, fmt, __VA_ARGS__); } while (0)
-
 #define MAX(a, b) (a)>(b)?(a):(b)
 #define MIN(a, b) (a)<(b)?(a):(b)
 
