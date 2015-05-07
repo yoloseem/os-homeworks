@@ -25,7 +25,9 @@ typedef struct philosopher {
 philosopher phil[NUM_PHIL];
 char *verboseStates[] = {"HUNGRY", "EATING", "THINKING"};
 
+// chopstick semaphores: Binary semaphores for each chopsticks
 sem_t chopstick[NUM_PHIL];
+// counting semaphore: Keep up to n -1 philosophers trying to acquire chopstick
 sem_t lock;
 
 int idlewait ()  // 10~500 msec wait
@@ -42,6 +44,8 @@ unsigned int tick () {  // get current time (msec)
 }
 
 void initPhil (void) {
+    // 1. Set up philosophers' initial states as specified in HW description
+    // 2. Initialize chopstick semaphores
     unsigned short i;
     for (i=0; i<NUM_PHIL; i++) {
         phil[i].numEat = 0;
@@ -57,35 +61,40 @@ void* dining (void* arg) {
     unsigned int start_time;
     unsigned int start_hungry, end_hungry;
     unsigned short phil_i = (int)(intptr_t)arg;
-    philosopher* curphil = &phil[phil_i];
+    philosopher* curphil = &phil[phil_i]; // reference to current philosopher
     left = phil_i;
     right = (phil_i + 1) % NUM_PHIL;
 
     start_time = tick();
+    // Repeat think-hungry-eating cycle during given execution time in secs
     while ((tick() - start_time) / 1000 < EXEC_TIME) {
-        // initially/still THINKING
+        // initially or still in THINKING state
         idlewait();
 
-        // HUNGRY
+        // Got into HUNGRY state
         curphil->state = HUNGRY;
         start_hungry = tick();
-        // HUNGRY -- To eat, acquires chopsticks
+        // To eat, acquires chopsticks
+        // 1. Wait for my turn
+        //    (up to n-1 philosophers are permitted to acquire chopsticks)
         sem_wait(&lock);
+        // 2. Wait and acquire both chopsticks
         sem_wait(&chopstick[left]);
         sem_wait(&chopstick[right]);
+        // 3. Timing
         end_hungry = tick();
 
-        // EATING
+        // Got into EATING state
         curphil->state = EATING;
         curphil->wait += (end_hungry - start_hungry);
         curphil->numEat++;
         idlewait();
-        // EATING -- To think(and not hungry), release chopsticks
+        // To think(and not hungry), release chopsticks
         sem_post(&chopstick[left]);
         sem_post(&chopstick[right]);
         sem_post(&lock);
 
-        // Stop EATING and go THINKING
+        // Stop EATING and go to THINKING state again
         curphil->state = THINKING;
     }
 
@@ -102,8 +111,10 @@ int main (void) {
     srand(time(NULL));
     start = tick();
     initPhil();
+    // Initialize philosopher-counting semaphore
     sem_init(&lock, 0, NUM_PHIL - 1);
 
+    // Spawn philosopher threads
     for (i=0; i<NUM_PHIL; i++) {
         args[i] = i;
         pthread_create(&t[i], NULL, dining, (void*)(intptr_t)args[i]);
@@ -111,8 +122,9 @@ int main (void) {
     for (i=0; i<NUM_PHIL; i++) {
         pthread_join(t[i], &t_return);
     }
-    end = tick();
+    end = tick(); // Timing
 
+    // Destory all used semaphores
     for (i=0; i<NUM_PHIL; i++)
         sem_destroy(&chopstick[i]);
     sem_destroy(&lock);
