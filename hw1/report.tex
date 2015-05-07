@@ -11,6 +11,14 @@
 \usepackage{enumerate}
 \usepackage{minted}
 \usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+\urlstyle{same}
 
 \usepackage{geometry}
 \geometry{total={210mm,297mm},
@@ -20,14 +28,6 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 \linespread{1.3}
 
 \newcommand{\linia}{\rule{\linewidth}{0.5pt}}
-
-% custom theorems if needed
-\newtheoremstyle{mytheor}
-    {1ex}{1ex}{\normalfont}{0pt}{\scshape}{.}{1ex}
-    {{\thmname{#1 }}{\thmnumber{#2}}{\thmnote{ (#3)}}}
-
-\theoremstyle{mytheor}
-\newtheorem{defi}{Definition}
 
 % my own titles
 \makeatletter
@@ -58,6 +58,8 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 \renewcommand{\footrulewidth}{0pt}
 %
 
+\renewcommand\listoflistingscaption{List of source codes}
+
 \begin{document}
 
 \title{Operating Systems Homework \#1}
@@ -70,14 +72,36 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 
 \section*{The Dining Philosophers Problem}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\subsection*{Comments on this homework:}
+    To be written
 
-{{philo.c}}
-\inputminted
-[
-fontsize=\footnotesize,
-linenos
-]
-{c}{philo.c}
+\subsection*{References:}
+\begin{enumerate}
+\item
+    Full HW description:
+    
+        \url{https://github.com/yoloseem/os-homeworks/blob/master/hw1/README.md}
+
+\item
+    Raw source codes:
+    
+        \url{https://github.com/yoloseem/os-homeworks/tree/master/hw1}
+
+\item
+    Commit history:
+    
+        \url{https://github.com/yoloseem/os-homeworks/commits/master/hw1}
+\end{enumerate}
+
+\subsection*{Screenshots:}
+    To be added
+
+\subsection*{Source codes:}
+
+\subsubsection*{Makefile}
+\inputminted[fontsize=\footnotesize,linenos]{basemake}{Makefile}
+
+\subsubsection*{philo.c (Main source code)}
+\inputminted[fontsize=\footnotesize,linenos]{c}{philo.c}
 
 \end{document}
