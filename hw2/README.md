@@ -1,5 +1,7 @@
 # The Dining Philosophers Problem
 
+My report: [PDF](https://raw.githubusercontent.com/yoloseem/os-homeworks/master/hw2/report.pdf)
+
 Specifications:
 
 * Each philosopher repeats the following
