@@ -43,7 +43,7 @@ Variance wait time in HUNGRY state : 33.187007
 Total run time : 600.042 sec
 ```
 
-## Sumissions
+## Submissions
 
 * Report includes:
     * Annotated source code
