@@ -5,3 +5,4 @@
 ### homeworks
 
 * [homework 2](https://github.com/yoloseem/os-homeworks/tree/master/hw2)
+* [homework 3](https://github.com/yoloseem/os-homeworks/tree/master/hw3)
