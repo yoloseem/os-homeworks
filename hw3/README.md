@@ -6,7 +6,7 @@
     * Priority -- [Fixed-prioirty pre-emptive scheduling](https://en.wikipedia.org/wiki/Fixed-priority_pre-emptive_scheduling)
     * RR -- [Round-robin](https://en.wikipedia.org/wiki/Round-robin_scheduling)
 * Time continues in unit of millisecond and let us ignore any overheads on context switching.
-* Print Gantt chart for process schedule and waiting times for each process
+* Print [Gantt chart](https://en.wikipedia.org/wiki/Gantt_chart) for process schedule and waiting times for each process
 * Define the `struct` for process
 
 Execution format:
