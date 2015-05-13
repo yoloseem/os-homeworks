@@ -6,6 +6,7 @@
 #define ERROREXIT() {printf("ERROR!\n"); exit(0);}
 
 #define MAX_PROCESSES 10
+#define RR_QUANTUM 5
 
 typedef struct Process {
     // (Integer) Bursting time in milliseconds
@@ -61,6 +62,77 @@ int main (int argc, char** argv) {
     else if (!strcmp(argv[2], "rr")) policy = RR;
     else ERROREXIT();
     printf("based on %s.\n", verbosePolicy[policy]);
+
+    int i, timelapsed = 0;
+    int quantum = RR_QUANTUM;
+    int pick = -1;
+    int futureProc = 0;
+
+    do { // Repeat until there's no process that has remaining burst
+        futureProc = 0;
+
+        /* Picking process to run in next single millisecond
+         * based on given scheduling policy */
+        if (policy == FCFS) {
+            pick = -1;
+            int firstStartAt = 0x7fffffff;
+            /* FCFS's picking criteria: first come (startAt) */
+            for (i=0; i<n; i++) {
+                if (procs[i].burstTime <= 0) continue;
+                if (procs[i].startAt > timelapsed) {
+                    futureProc = 1;
+                    continue;
+                }
+
+                if (policy == FCFS) {
+                    if (firstStartAt > procs[i].startAt) {
+                        firstStartAt = procs[i].startAt;
+                        pick = i;
+                    }
+                }
+            }
+        }
+        else if (policy == RR) {
+            /* RR's picking: switch to next only when current time quantum has
+             * been ended */
+            if (pick == -1) pick = 0;
+            if (quantum == 0) {
+                quantum = RR_QUANTUM;
+                pick++;
+            }
+            for (i=0; i<n; i++) {
+                if (procs[(pick + i) % n].burstTime > 0) {
+                    if (procs[(pick + i) % n].startAt > timelapsed) {
+                        futureProc = 1;
+                        continue;
+                    }
+                    pick = (pick + i) % n;
+                    break;
+                }
+            }
+            if (i == n) pick = -1;
+            else quantum--;
+        }
+
+        if (futureProc == 0 && pick == -1) // No more processes to be executed
+            break;
+
+        if (pick != -1) {
+            printf("[DEBUG] At %d msec, running process #%d\n",
+                   timelapsed, pick);
+            for (i=0; i<n; i++) {
+                if (procs[i].burstTime <= 0) continue;
+                if (i == pick)
+                    procs[i].burstTime--;
+                else
+                    procs[i].waitTime++;
+            }
+        }
+        else { // there will be some processes in future
+            printf("[DEBUG] At %d msec, no running process\n", timelapsed);
+        }
+
+    } while (++timelapsed);
 
     return 0;
 }
