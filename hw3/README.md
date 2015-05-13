@@ -1,10 +1,10 @@
 # Process Scheduling Simulator
 
 * Implement a program that simulates CPU's process scheduling algorithm:
-    * FCFS
-    * SJF (non-preemptive)
-    * Prioirty
-    * Round-Robin
+    * FCFS -- [First-come, first-served](https://en.wikipedia.org/wiki/First-come,_first-served)
+    * SJF -- [Shortest job next](https://en.wikipedia.org/wiki/Shortest_job_next) (non-preemptvie)
+    * Priority -- [Fixed-prioirty pre-emptive scheduling](https://en.wikipedia.org/wiki/Fixed-priority_pre-emptive_scheduling)
+    * RR -- [Round-robin](https://en.wikipedia.org/wiki/Round-robin_scheduling)
 * Time continues in unit of millisecond and let us ignore any overheads on context switching.
 * Print Gantt chart for process schedule and waiting times for each process
 * Define the `struct` for process
