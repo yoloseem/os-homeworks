@@ -14,6 +14,8 @@ typedef struct Process {
     int priority;
     // (Integer) Time at the process appeared/created
     int startAt;
+    // (Integer) Waiting time for the process
+    int waitTime;
 } Process;
 Process procs[MAX_PROCESSES];
 
@@ -42,6 +44,7 @@ int main (int argc, char** argv) {
                    &procs[n].burstTime, &procs[n].priority, &procs[n].startAt);
             if (!(procs[n].burstTime | procs[n].priority | procs[n].startAt))
                 break;
+            procs[n].waitTime = 0;
             n++;
         }
         if (!n) ERROREXIT();
