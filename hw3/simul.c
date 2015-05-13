@@ -35,9 +35,7 @@ int main (int argc, char** argv) {
                 break;
             n++;
         }
-        if (!n) {
-            ERROREXIT();
-        }
+        if (!n) ERROREXIT();
         printf("Scheduling %d processes...\n", n);
     }
     else {
