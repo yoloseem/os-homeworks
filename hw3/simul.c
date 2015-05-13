@@ -1,5 +1,8 @@
 /* simul.c */
 #include <stdio.h>
+#include <stdlib.h>
+
+#define ERROREXIT() {printf("ERROR!\n"); exit(0);}
 
 #define MAX_PROCESSES 10
 
