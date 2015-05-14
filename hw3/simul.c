@@ -172,5 +172,14 @@ int main (int argc, char** argv) {
 
     } while (++timelapsed);
 
+    double avgWait = 0.0;
+    for (i=0; i<n; i++) {
+        printf("Process %d waiting time = %d msec\n",
+               i + 1, procs[i].waitTime);
+        avgWait += procs[i].waitTime;
+    }
+    avgWait /= n;
+    printf("Average waiting time = %.1f msec\n", avgWait);
+
     return 0;
 }
