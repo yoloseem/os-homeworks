@@ -174,6 +174,7 @@ int main (int argc, char** argv) {
 
     } while (++timelapsed);
 
+    printf("\n* Gantt Chart:\n");
     printf("0 ");
     for (i=1; i<=timelapsed; i++) {
         if (i % 5 == 0) printf("%2d", i);
