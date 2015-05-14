@@ -84,11 +84,9 @@ int main (int argc, char** argv) {
                     continue;
                 }
 
-                if (policy == FCFS) {
-                    if (firstStartAt > procs[i].startAt) {
-                        firstStartAt = procs[i].startAt;
-                        pick = i;
-                    }
+                if (firstStartAt > procs[i].startAt) {
+                    firstStartAt = procs[i].startAt;
+                    pick = i;
                 }
             }
         }
