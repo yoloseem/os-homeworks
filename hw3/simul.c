@@ -38,6 +38,7 @@ int main (int argc, char** argv) {
     if (argc == 3) {
         /* Input from text file
          *     $ ./exename [filename] [policy]
+         *     ([policy] can be one of 'fcfs', 'sjf', 'prior', or 'rr')
          *
          * Text file must be in format of:
          *     Each line contains: "[burst time] [priority] [start time]"
@@ -56,6 +57,8 @@ int main (int argc, char** argv) {
     else {
         printf("Execute the program in format of:\n");
         printf("    $ %s [filename] [policy]\n", argv[0]);
+        printf("    ([policy] can be one of ");
+        printf("'fcfs', 'sjf', 'prior', or 'rr')\n");
     }
 
     printf("Scheduling %d processes... ", n);
@@ -63,7 +66,10 @@ int main (int argc, char** argv) {
     else if (!strcmp(argv[2], "sjf")) policy = SJF;
     else if (!strcmp(argv[2], "prior")) policy = PRIOR;
     else if (!strcmp(argv[2], "rr")) policy = RR;
-    else ERROREXIT();
+    else {
+        printf("policy must be one of 'fcfs', 'sjf', 'prior', or 'rr'\n");
+        ERROREXIT();
+    }
     printf("based on %s.\n", verbosePolicy[policy]);
 
     int i, timelapsed = 0;
