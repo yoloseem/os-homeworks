@@ -160,8 +160,6 @@ int main (int argc, char** argv) {
 
         if (pick != -1) {
             gantt[timelapsed] = pick + 1;
-            printf("[DEBUG] At %d msec, running process #%d\n",
-                   timelapsed, pick + 1);
             for (i=0; i<n; i++) {
                 if (procs[i].burstTime <= 0) continue;
                 if (i == pick)
