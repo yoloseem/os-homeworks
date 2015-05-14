@@ -134,6 +134,23 @@ int main (int argc, char** argv) {
                 }
             }
         }
+        else if (policy == SJF) {
+            pick = -1;
+            int shortestBurst = 0x7fffffff;
+            /* SJF's picking criteria: shortest remaining burst (burstTime) */
+            for (i=0; i<n; i++) {
+                if (procs[i].burstTime <= 0) continue;
+                if (procs[i].startAt > timelapsed) {
+                    futureProc = 1;
+                    continue;
+                }
+
+                if (shortestBurst > procs[i].burstTime) {
+                    shortestBurst = procs[i].burstTime;
+                    pick = i;
+                }
+            }
+        }
 
         if (futureProc == 0 && pick == -1) // No more processes to be executed
             break;
