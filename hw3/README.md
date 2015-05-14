@@ -2,6 +2,8 @@
 
 My report: [PDF](https://raw.githubusercontent.com/yoloseem/os-homeworks/master/hw3/report.pdf)
 
+Specifications:
+
 * Implement a program that simulates CPU's process scheduling algorithm:
     * FCFS -- [First-come, first-served](https://en.wikipedia.org/wiki/First-come,_first-served)
     * SJF -- [Shortest job next](https://en.wikipedia.org/wiki/Shortest_job_next) (non-preemptvie)
