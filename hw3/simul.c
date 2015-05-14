@@ -116,6 +116,26 @@ int main (int argc, char** argv) {
                 quantum = 0;
             }
         }
+        else if (policy == PRIOR) {
+            /* PRIOR's picking: Highest priority first (preemptive,
+             * lower value is higher priority */
+            int highprior = 0x7fffffff;
+            if (pick != -1 && procs[pick].burstTime == 0) pick = -1;
+            if (pick == -1) {
+                for (i=0; i<n; i++) {
+                    if (procs[i].burstTime > 0) {
+                        if (procs[i].startAt > timelapsed) {
+                            futureProc = 1;
+                            continue;
+                        }
+                        if (highprior > procs[i].priority) {
+                            highprior = procs[i].priority;
+                            pick = i;
+                        }
+                    }
+                }
+            }
+        }
 
         if (futureProc == 0 && pick == -1) // No more processes to be executed
             break;
