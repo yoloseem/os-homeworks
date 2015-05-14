@@ -107,11 +107,14 @@ int main (int argc, char** argv) {
                         continue;
                     }
                     pick = (pick + i) % n;
+                    quantum--;
                     break;
                 }
             }
-            if (i == n) pick = -1;
-            else quantum--;
+            if (i == n) {
+                pick = -1;
+                quantum = 0;
+            }
         }
 
         if (futureProc == 0 && pick == -1) // No more processes to be executed
