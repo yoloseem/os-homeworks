@@ -6,6 +6,7 @@
 #define ERROREXIT() {printf("ERROR!\n"); exit(0);}
 
 #define MAX_PROCESSES 10
+#define MAX_TIMELAPSE 100
 #define RR_QUANTUM 5
 
 typedef struct Process {
@@ -30,6 +31,8 @@ char *verbosePolicy[] = {"First-come, first-served",
                          "Shortest-job-frst",
                          "Prioirty-based",
                          "Round-robin"};
+
+short gantt[MAX_TIMELAPSE];
 
 int main (int argc, char** argv) {
     if (argc == 3) {
@@ -156,6 +159,7 @@ int main (int argc, char** argv) {
             break;
 
         if (pick != -1) {
+            gantt[timelapsed] = pick + 1;
             printf("[DEBUG] At %d msec, running process #%d\n",
                    timelapsed, pick + 1);
             for (i=0; i<n; i++) {
@@ -167,10 +171,23 @@ int main (int argc, char** argv) {
             }
         }
         else { // there will be some processes in future
-            printf("[DEBUG] At %d msec, no running process\n", timelapsed);
+            gantt[timelapsed] = -1;
         }
 
     } while (++timelapsed);
+
+    printf("0 ");
+    for (i=1; i<=timelapsed; i++) {
+        if (i % 5 == 0) printf("%2d", i);
+        else printf("  ");
+    }
+    if (timelapsed % 5) printf("%2d", timelapsed);
+    printf("\n");
+    for (i=0; i<=timelapsed; i++) {
+        if (gantt[i] > 0) printf(" %d", gantt[i]);
+        else printf(" -");
+    }
+    printf("\n\n");
 
     double avgWait = 0.0;
     for (i=0; i<n; i++) {
